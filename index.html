@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Palamig Surprise</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      background-color: #ffe6f0;
+      color: #333;
+      overflow: hidden;
+    }
+
+    .page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+
+    .page.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      background-color: #ff80ab;
+      color: white;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #ff4081;
+    }
+
+    .page2 {
+      flex-direction: row;
+      justify-content: space-evenly;
+      gap: 40px;
+    }
+
+    .page2-text {
+      text-align: left;
+      font-size: 24px;
+      color: #444;
+    }
+
+    .ice-img {
+      width: 300px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      /* animation will be added via JS */
+    }
+
+    .pop-beat {
+      animation: popBeat 1.5s infinite ease-in-out;
+    }
+
+    .heart-btn {
+      background: none;
+      border: none;
+      font-size: 60px;
+      cursor: pointer;
+      margin-top: 20px;
+      animation: heartbeat 1.5s infinite;
+      transition: transform 0.3s;
+    }
+
+    .heart-btn:hover {
+      transform: scale(1.3);
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes popBeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.15);
+      }
+    }
+
+    .ice-anim-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeSlideIn 1.5s ease forwards;
+    }
+
+    .ice-anim {
+      width: 350px;
+      height: auto;
+      animation: floating 3s ease-in-out infinite, sparkle 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 15px #ffaad4);
+    }
+
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-25px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes fadeSlideIn {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0px);
+        opacity: 1;
+      }
+    }
+
+    @keyframes sparkle {
+      0%, 100% { filter: drop-shadow(0 0 10px #ffaad4); }
+      50% { filter: drop-shadow(0 0 20px #ff66cc); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div id="page1" class="page active">
+    <h1>Uy, Kamusta Kana?</h1>
+    <h2>Sana Okay Ka Lang</h2>
+    <button class="btn" onclick="goToPage2()">Click Moko</button>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div id="page2" class="page page2">
+    <img id="iceImage" src="https://media-hosting.imagekit.io/b67314cafde0445a/images%20(1).jpg?Expires=1839411902&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=EP6npE-gnDjv83GSqCHxOl0p9VcQ4H97zi58EznFPtasLq0ZegVd-JdTtwTXFyNvjKLefxUAdt33Of0qC67omoX5hoaVnXoQY-scij-a9TOI9buwpd7omiHGIO2ilxY8CmaaiK3U48kUt8ZFq3gs0neqNu4iMfb5vrBcGHa73Rczjc-XFDMrj2mYxG2JY8NT~Wk6i1bA-ZRVwmiibD1b00HIVZfnBH~M3CtuYLHx-ei0Dkt7as67FNeIZzaTqL7cQZhCtp9EDUYQZp6v9Gk9veJTahcIQcNC4DngPbv5P-Dk8MB61tHBgKSwlagWTXH6mGacumW9rSCAFzmS8oq4yw__" alt="Ice Cream" class="ice-img">
+    <div class="page2-text">
+      <p><strong>Palamig Ka Muna</strong></p>
+      <p>Deserve Mo Ang Ice Cream,</p>
+      <p><em>*Click Mo Ung Heart*</em></p>
+      <button class="heart-btn" onclick="goToPage3()">❤️</button>
+    </div>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div id="page3" class="page">
+    <div class="ice-anim-container">
+      <img src="https://media-hosting.imagekit.io/637bfd1ef2af421c/ICECREAM2%20(1).png?Expires=1839404421&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=WA-N8ouBn6YlpgIrOPuj9BatnMPDlKVUo-v7uODJROCpZHEkWeVJ83aWCMo80roKthgWTiP0CcIwPK0m4KVMp82oGmHy9RbWkEgeWrCw2WIl-U2MiG0Z6Q7Cv6zih-10s6TF3MseS2rbbyKUAC8sE1ZJS-saDnEykGrUjfCGIOiY6Ody7~SaeIeGwNsLujlaNUE68jpVNui8UN0iXMZLaZi0CSvaz4PyWl8EcDRe4F2Bl18wGISXUEH4H7KwuYXUYsXx4Vbtq1yX8jDqXESPQLYuBGCG1MsSUAhEjCd8zB5Zu0A4G9sM3znH4fwkehwZDQncIfgG41aHFagffNCfHA__" alt="Animated Ice Cream" class="ice-anim">
+      <h2 style="margin-top: 20px; color: #ff4081; font-size: 30px;">Yaaay! Ice Cream Time 🍦</h2>
+    </div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" src="McDo Summer Desserts x Al James - Palamig Ka Muna.mp3" preload="auto"></audio>
+
+  <script>
+    function transitionPages(fromId, toId) {
+      const fromPage = document.getElementById(fromId);
+      const toPage = document.getElementById(toId);
+
+      fromPage.classList.remove('active');
+      setTimeout(() => {
+        toPage.classList.add('active');
+      }, 300);
+    }
+
+    function goToPage2() {
+      transitionPages('page1', 'page2');
+
+      const music = document.getElementById("bgMusic");
+      music.volume = 0.5;
+      music.play().catch(e => console.log("Play error:", e));
+
+      // Add animation class
+      const img = document.getElementById("iceImage");
+      img.classList.add("pop-beat");
+    }
+
+    function goToPage3() {
+      transitionPages('page2', 'page3');
+    }
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
