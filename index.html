@@ -60,6 +60,7 @@
       flex-direction: row;
       justify-content: space-evenly;
       gap: 40px;
+      flex-wrap: wrap;
     }
 
     .page2-text {
@@ -70,14 +71,10 @@
 
     .ice-img {
       width: 300px;
+      max-width: 100%;
       height: auto;
       border-radius: 20px;
       box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-      /* animation will be added via JS */
-    }
-
-    .pop-beat {
-      animation: popBeat 1.5s infinite ease-in-out;
     }
 
     .heart-btn {
@@ -88,6 +85,7 @@
       margin-top: 20px;
       animation: heartbeat 1.5s infinite;
       transition: transform 0.3s;
+      display: none;
     }
 
     .heart-btn:hover {
@@ -97,29 +95,6 @@
     @keyframes heartbeat {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.2); }
-    }
-
-    @keyframes bounceIn {
-      0% {
-        transform: scale(0.5);
-        opacity: 0;
-      }
-      60% {
-        transform: scale(1.2);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-
-    @keyframes popBeat {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.15);
-      }
     }
 
     .ice-anim-container {
@@ -132,6 +107,7 @@
 
     .ice-anim {
       width: 350px;
+      max-width: 100%;
       height: auto;
       animation: floating 3s ease-in-out infinite, sparkle 2s ease-in-out infinite;
       filter: drop-shadow(0 0 15px #ffaad4);
@@ -158,6 +134,45 @@
       0%, 100% { filter: drop-shadow(0 0 10px #ffaad4); }
       50% { filter: drop-shadow(0 0 20px #ff66cc); }
     }
+
+    /* ✅ Responsive Adjustments */
+    @media (max-width: 768px) {
+      .page2 {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .ice-img {
+        width: 80%;
+        max-width: 250px;
+      }
+
+      .page2-text {
+        font-size: 18px;
+        text-align: center;
+      }
+
+      .btn {
+        font-size: 18px;
+        padding: 12px 24px;
+      }
+
+      .heart-btn {
+        font-size: 50px;
+      }
+
+      .ice-anim {
+        width: 80%;
+        max-width: 300px;
+      }
+
+      .ice-anim-container h2 {
+        font-size: 24px;
+        text-align: center;
+        padding: 0 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -176,7 +191,7 @@
       <p><strong>Palamig Ka Muna</strong></p>
       <p>Deserve Mo Ang Ice Cream,</p>
       <p><em>*Click Mo Ung Heart*</em></p>
-      <button class="heart-btn" onclick="goToPage3()">❤️</button>
+      <button class="heart-btn" id="heartBtn" onclick="goToPage3()">❤️</button>
     </div>
   </div>
 
@@ -209,9 +224,54 @@
       music.volume = 0.5;
       music.play().catch(e => console.log("Play error:", e));
 
-      // Add animation class
-      const img = document.getElementById("iceImage");
-      img.classList.add("pop-beat");
+      const imageURL = "https://media-hosting.imagekit.io/b67314cafde0445a/images%20(1).jpg?Expires=1839411902&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=EP6npE-gnDjv83GSqCHxOl0p9VcQ4H97zi58EznFPtasLq0ZegVd-JdTtwTXFyNvjKLefxUAdt33Of0qC67omoX5hoaVnXoQY-scij-a9TOI9buwpd7omiHGIO2ilxY8CmaaiK3U48kUt8ZFq3gs0neqNu4iMfb5vrBcGHa73Rczjc-XFDMrj2mYxG2JY8NT~Wk6i1bA-ZRVwmiibD1b00HIVZfnBH~M3CtuYLHx-ei0Dkt7as67FNeIZzaTqL7cQZhCtp9EDUYQZp6v9Gk9veJTahcIQcNC4DngPbv5P-Dk8MB61tHBgKSwlagWTXH6mGacumW9rSCAFzmS8oq4yw__";
+
+      let counter = 0;
+      const interval = setInterval(() => {
+        for (let i = 0; i < 3; i++) {
+          const img = document.createElement("img");
+          img.src = imageURL;
+          img.style.position = "fixed";
+          img.style.left = `${Math.random() * window.innerWidth}px`;
+          img.style.top = `${Math.random() * window.innerHeight}px`;
+          img.style.width = "50px";
+          img.style.borderRadius = "10px";
+          img.style.zIndex = "9999";
+          img.style.pointerEvents = "none";
+
+          const fire = document.createElement("div");
+          fire.textContent = "🔥";
+          fire.style.position = "fixed";
+          fire.style.left = `${Math.random() * window.innerWidth}px`;
+          fire.style.top = `${Math.random() * window.innerHeight}px`;
+          fire.style.fontSize = "28px";
+          fire.style.zIndex = "9999";
+          fire.style.pointerEvents = "none";
+
+          document.body.appendChild(img);
+          document.body.appendChild(fire);
+
+          img.animate([
+            { transform: "translateY(0)", opacity: 1 },
+            { transform: "translateY(-100px)", opacity: 0 }
+          ], { duration: 1500, easing: "ease-out" });
+
+          fire.animate([
+            { transform: "translateY(0)", opacity: 1 },
+            { transform: "translateY(-100px)", opacity: 0 }
+          ], { duration: 1500, easing: "ease-out" });
+
+          setTimeout(() => {
+            img.remove();
+            fire.remove();
+          }, 1600);
+        }
+        counter++;
+        if (counter >= 25) {
+          clearInterval(interval);
+          document.getElementById('heartBtn').style.display = 'inline-block';
+        }
+      }, 400);
     }
 
     function goToPage3() {
