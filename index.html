@@ -135,7 +135,22 @@
       50% { filter: drop-shadow(0 0 20px #ff66cc); }
     }
 
-    /* ✅ Responsive Adjustments */
+    .icecream-drop {
+      position: fixed;
+      top: -100px;
+      width: 50px;
+      z-index: 999;
+      animation: drop 4s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes drop {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
     @media (max-width: 768px) {
       .page2 {
         flex-direction: column;
@@ -185,18 +200,18 @@
   </div>
 
   <!-- PAGE 2 -->
-<div id="page2" class="page page2">
-  <img id="iceImage" src="https://media-hosting.imagekit.io/b67314cafde0445a/images%20(1).jpg?Expires=1839411902&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=EP6npE-gnDjv83GSqCHxOl0p9VcQ4H97zi58EznFPtasLq0ZegVd-JdTtwTXFyNvjKLefxUAdt33Of0qC67omoX5hoaVnXoQY-scij-a9TOI9buwpd7omiHGIO2ilxY8CmaaiK3U48kUt8ZFq3gs0neqNu4iMfb5vrBcGHa73Rczjc-XFDMrj2mYxG2JY8NT~Wk6i1bA-ZRVwmiibD1b00HIVZfnBH~M3CtuYLHx-ei0Dkt7as67FNeIZzaTqL7cQZhCtp9EDUYQZp6v9Gk9veJTahcIQcNC4DngPbv5P-Dk8MB61tHBgKSwlagWTXH6mGacumW9rSCAFzmS8oq4yw__" 
-    alt="Ice Cream" 
-    class="ice-img">
-  
-  <div class="page2-text">
-    <p style="font-size: 48px; font-weight: bold;">Palamig Ka Muna</p>
-    <p style="font-size: 28px;">Deserve Mo Ang Ice Cream,</p>
-    <p style="font-size: 20px; font-style: italic;">*Click Mo Ung Heart*</p>
-    <button class="heart-btn" id="heartBtn" onclick="goToPage3()">❤️</button>
+  <div id="page2" class="page page2">
+    <img id="iceImage" src="https://media-hosting.imagekit.io/b67314cafde0445a/images%20(1).jpg?Expires=1839411902&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=EP6npE-gnDjv83GSqCHxOl0p9VcQ4H97zi58EznFPtasLq0ZegVd-JdTtwTXFyNvjKLefxUAdt33Of0qC67omoX5hoaVnXoQY-scij-a9TOI9buwpd7omiHGIO2ilxY8CmaaiK3U48kUt8ZFq3gs0neqNu4iMfb5vrBcGHa73Rczjc-XFDMrj2mYxG2JY8NT~Wk6i1bA-ZRVwmiibD1b00HIVZfnBH~M3CtuYLHx-ei0Dkt7as67FNeIZzaTqL7cQZhCtp9EDUYQZp6v9Gk9veJTahcIQcNC4DngPbv5P-Dk8MB61tHBgKSwlagWTXH6mGacumW9rSCAFzmS8oq4yw__" 
+      alt="Ice Cream" 
+      class="ice-img">
+    
+    <div class="page2-text">
+      <p style="font-size: 48px; font-weight: bold;">Palamig Ka Muna</p>
+      <p style="font-size: 28px;">Deserve Mo Ang Ice Cream,</p>
+      <p style="font-size: 20px; font-style: italic;">*Click Mo Ung Heart*</p>
+      <button class="heart-btn" id="heartBtn" onclick="goToPage3()">❤️</button>
+    </div>
   </div>
-</div>
 
   <!-- PAGE 3 -->
   <div id="page3" class="page">
@@ -279,12 +294,25 @@
 
     function goToPage3() {
       transitionPages('page2', 'page3');
+      startIceCreamRain(); // Trigger ice cream rain
+    }
+
+    function startIceCreamRain() {
+      const rainInterval = setInterval(() => {
+        const img = document.createElement("img");
+        img.src = "https://media-hosting.imagekit.io/637bfd1ef2af421c/ICECREAM2%20(1).png?Expires=1839404421&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=WA-N8ouBn6YlpgIrOPuj9BatnMPDlKVUo-v7uODJROCpZHEkWeVJ83aWCMo80roKthgWTiP0CcIwPK0m4KVMp82oGmHy9RbWkEgeWrCw2WIl-U2MiG0Z6Q7Cv6zih-10s6TF3MseS2rbbyKUAC8sE1ZJS-saDnEykGrUjfCGIOiY6Ody7~SaeIeGwNsLujlaNUE68jpVNui8UN0iXMZLaZi0CSvaz4PyWl8EcDRe4F2Bl18wGISXUEH4H7KwuYXUYsXx4Vbtq1yX8jDqXESPQLYuBGCG1MsSUAhEjCd8zB5Zu0A4G9sM3znH4fwkehwZDQncIfgG41aHFagffNCfHA__";
+        img.className = "icecream-drop";
+        img.style.left = Math.random() * window.innerWidth + "px";
+        img.style.width = "40px";
+        document.body.appendChild(img);
+        setTimeout(() => img.remove(), 5000);
+      }, 200);
+
+      setTimeout(() => clearInterval(rainInterval), 15000); // Stop rain after 15 seconds
     }
   </script>
-
 </body>
 </html>
-
 
 
 
